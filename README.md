@@ -18,7 +18,8 @@ This documentation supports the building of the DAOHaus subgraph.
 | Name             | MolochSummoner                                                                                                                                                                            |
 | Role             | Moloch DAO v2 with multi-summoner capabilities, plus register function for metadata. Summoner uses EIP-1167 proxy pattern to decrease gas costs significantly w/r to moloch v2 summoning. |
 
-
+## Diagram
+https://miro.com/app/board/uXjVPGu6mgE=/
 
 ## Events
 ```
