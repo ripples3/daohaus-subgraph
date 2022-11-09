@@ -14,8 +14,86 @@ import {
   UpdateDelegateKey,
   Withdraw
 } from "../generated/Moloch/Moloch"
-import { ExampleEntity } from "../generated/schema"
 
+import {
+  Moloch,
+  Member,
+  Proposal,
+  Vote,
+  RageQuit,
+} from "../generated/schema";
+
+//legacy daos will trigger this, factory daos get created in factory-mapping.ts
+export function handleSummonComplete(event: SummonComplete): void {
+  //let molochId = event.address.toHex();
+  //let moloch = new Moloch(molochId);
+  let moloch = Moloch.load(event.address.toHex());
+    //set id of the new moloch to origin contract 
+
+    if(moloch === null){
+       moloch = new Moloch(event.address.toHex());
+    }
+
+  moloch.summoner = event.params.summoner;
+  moloch.createdAt = event.params.summoningTime.toString();
+ // moloch.members = event.params.summoningTime.toString();  
+//moloch.summoningTime = event.params.summoningTime.toString();
+
+ // moloch.deleted = false;
+ // moloch.periodDuration = event.params.periodDuration;
+ // moloch.votingPeriodLength = event.params.votingPeriodLength;
+ // moloch.gracePeriodLength = event.params.gracePeriodLength;
+ // moloch.proposalDeposit = event.params.proposalDeposit;
+//moloch.dilutionBound = event.params.dilutionBound;
+ // moloch.processingReward = event.params.processingReward;
+//  moloch.depositToken = approvedTokens[0];
+//  moloch.approvedTokens = approvedTokens;
+ // moloch.totalShares = BigInt.fromI32(1);
+//  moloch.totalLoot = BigInt.fromI32(0);
+
+  moloch.save();
+/*
+  let memberId = molochId
+    .concat("-member-")
+    .concat(event.params.summoner.toHex());
+  let newMember = new Member(memberId);
+  newMember.moloch = molochId;
+  newMember.molochAddress = event.address;
+  newMember.memberAddress = event.params.summoner;
+  newMember.createdAt = event.block.timestamp.toString();
+  newMember.delegateKey = event.params.summoner;
+  newMember.shares = BigInt.fromI32(1);
+  newMember.loot = BigInt.fromI32(0);
+  newMember.exists = true;
+  newMember.tokenTribute = BigInt.fromI32(0);
+  newMember.didRagequit = false;
+  newMember.proposedToKick = false;
+  newMember.kicked = false;
+  newMember.isDao = Moloch.load(event.params.summoner.toHex())
+    ? event.params.summoner.toHexString()
+    : null;
+  newMember.isSafeMinion = SafeMinion.load(event.params.summoner.toHex())
+    ? event.params.summoner.toHexString()
+    : null;
+
+  newMember.save();
+
+  for (let i = 0; i < tokens.length; i++) {
+    let token = tokens[i];
+    let tokenId = molochId.concat("-token-").concat(token.toHex());
+    createMemberTokenBalance(
+      molochId,
+      event.params.summoner,
+      tokenId,
+      BigInt.fromI32(0)
+    );
+
+
+  }*/
+}
+
+
+/*
 export function handleSummonComplete(event: SummonComplete): void {
   // Entities can be loaded from the store using a string ID; this ID
   // needs to be unique across all entities of the same type
@@ -34,8 +112,8 @@ export function handleSummonComplete(event: SummonComplete): void {
   entity.count = entity.count + BigInt.fromI32(1)
 
   // Entity fields can be set based on event parameters
-  entity.summoner = event.params.summoner
-  entity.tokens = event.params.tokens
+ // entity.summoner = event.params.summoner
+ // entity.tokens = event.params.tokens
 
   // Entities can be written to the store with `.save()`
   entity.save()
@@ -92,7 +170,7 @@ export function handleSummonComplete(event: SummonComplete): void {
   // - contract.GUILD(...)
   // - contract.submitWhitelistProposal(...)
 }
-
+*/
 export function handleSubmitProposal(event: SubmitProposal): void {}
 
 export function handleSponsorProposal(event: SponsorProposal): void {}
