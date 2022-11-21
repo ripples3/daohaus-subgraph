@@ -2,9 +2,7 @@ type Moloch @entity {
   "unique identifier and primary key of the entity"
   id: ID!
   "address that created the dao"
-  summoner: Bytes!
-  "timestamp of the block when the dao was summoned"
-  createdAt: String!
+  summoner: Bytes!  
   "member addresses scoped to this dao"
   members: [Member!] @derivedFrom(field: "moloch")
   "proposals scoped to this dao"
@@ -20,8 +18,6 @@ type Moloch @entity {
 type Member @entity {
   "unique identifier and primary key of the entity"
   id: ID!
-  "timestamp when the member was created"
-  createdAt: String!
   "moloch dao scoped to this member"
   moloch: Moloch!
   "related dao address"
@@ -48,12 +44,6 @@ type Member @entity {
   submissions: [Proposal!] @derivedFrom(field: "member")
   "rage quits scoped to this member"
   rageQuits: [RageQuit!] @derivedFrom(field: "member")
-  "boolean value of whether member was proposed to be kicked from the dao"
-  proposedToKick: Boolean
-  "boolean value of whether member was kicked from the dao"
-  kicked: Boolean
-  "proposal index of the proposal that kicked the member from the dao (0 if member is unkicked)"
-  jailed: BigInt
   "moloch dao address (if the member is a dao)"
   isDao: Moloch
 }
@@ -61,8 +51,6 @@ type Member @entity {
 type Vote @entity {
   "unique identifier and primary key of the entity"
   id: ID!
-  "block timestamp when the vote was submitted"
-  createdAt: String!
   "related proposal"
   proposal: Proposal!
   "related/voting member"
@@ -85,10 +73,6 @@ type Vote @entity {
 type Proposal @entity {
   "unique identifier and primary key of the entity"
   id: ID!
-  "block timestamp when the proposal was submitted"
-  createdAt: String!
-  "address that submitted the proposal"
-  createdBy: Bytes!
   "order that the proposal went through sponsorship process"
   proposalIndex: BigInt
   "id of the proposal"
@@ -120,8 +104,6 @@ type Proposal @entity {
 type RageQuit @entity {
   "unique identifier and primary key of the entity"
   id: ID!
-  "block timestamp when the member rage quit"
-  createdAt: String!
   "moloch dao scoped to this ragequit"
   moloch: Moloch!
   "related dao address"

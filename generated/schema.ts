@@ -51,15 +51,6 @@ export class Moloch extends Entity {
     this.set("summoner", Value.fromBytes(value));
   }
 
-  get createdAt(): string {
-    let value = this.get("createdAt");
-    return value!.toString();
-  }
-
-  set createdAt(value: string) {
-    this.set("createdAt", Value.fromString(value));
-  }
-
   get members(): Array<string> | null {
     let value = this.get("members");
     if (!value || value.kind == ValueKind.NULL) {
@@ -159,15 +150,6 @@ export class Member extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
-  }
-
-  get createdAt(): string {
-    let value = this.get("createdAt");
-    return value!.toString();
-  }
-
-  set createdAt(value: string) {
-    this.set("createdAt", Value.fromString(value));
   }
 
   get moloch(): string {
@@ -319,41 +301,6 @@ export class Member extends Entity {
     }
   }
 
-  get proposedToKick(): boolean {
-    let value = this.get("proposedToKick");
-    return value!.toBoolean();
-  }
-
-  set proposedToKick(value: boolean) {
-    this.set("proposedToKick", Value.fromBoolean(value));
-  }
-
-  get kicked(): boolean {
-    let value = this.get("kicked");
-    return value!.toBoolean();
-  }
-
-  set kicked(value: boolean) {
-    this.set("kicked", Value.fromBoolean(value));
-  }
-
-  get jailed(): BigInt | null {
-    let value = this.get("jailed");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
-  }
-
-  set jailed(value: BigInt | null) {
-    if (!value) {
-      this.unset("jailed");
-    } else {
-      this.set("jailed", Value.fromBigInt(<BigInt>value));
-    }
-  }
-
   get isDao(): string | null {
     let value = this.get("isDao");
     if (!value || value.kind == ValueKind.NULL) {
@@ -401,15 +348,6 @@ export class Vote extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
-  }
-
-  get createdAt(): string {
-    let value = this.get("createdAt");
-    return value!.toString();
-  }
-
-  set createdAt(value: string) {
-    this.set("createdAt", Value.fromString(value));
   }
 
   get proposal(): string {
@@ -546,24 +484,6 @@ export class Proposal extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
-  }
-
-  get createdAt(): string {
-    let value = this.get("createdAt");
-    return value!.toString();
-  }
-
-  set createdAt(value: string) {
-    this.set("createdAt", Value.fromString(value));
-  }
-
-  get createdBy(): Bytes {
-    let value = this.get("createdBy");
-    return value!.toBytes();
-  }
-
-  set createdBy(value: Bytes) {
-    this.set("createdBy", Value.fromBytes(value));
   }
 
   get proposalIndex(): BigInt | null {
@@ -740,15 +660,6 @@ export class RageQuit extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
-  }
-
-  get createdAt(): string {
-    let value = this.get("createdAt");
-    return value!.toString();
-  }
-
-  set createdAt(value: string) {
-    this.set("createdAt", Value.fromString(value));
   }
 
   get moloch(): string {

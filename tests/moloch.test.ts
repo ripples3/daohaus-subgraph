@@ -7,9 +7,9 @@ import {
   afterAll
 } from "matchstick-as/assembly/index"
 import { Address, BigInt } from "@graphprotocol/graph-ts"
-import { ExampleEntity } from "../generated/schema"
-import { SummonComplete } from "../generated/Moloch/Moloch"
-import { handleSummonComplete } from "../src/moloch"
+//import { ExampleEntity } from "../generated/schema"
+//import { SummonComplete } from "../generated/Moloch/Moloch"
+import { handleSummonComplete } from "../src/mappings"
 import { createSummonCompleteEvent } from "./moloch-utils"
 
 // Tests structure (matchstick-as >=0.5.0)
