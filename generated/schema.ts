@@ -521,15 +521,6 @@ export class Proposal extends Entity {
     this.set("moloch", Value.fromString(value));
   }
 
-  get molochAddress(): Bytes {
-    let value = this.get("molochAddress");
-    return value!.toBytes();
-  }
-
-  set molochAddress(value: Bytes) {
-    this.set("molochAddress", Value.fromBytes(value));
-  }
-
   get member(): string {
     let value = this.get("member");
     return value!.toString();

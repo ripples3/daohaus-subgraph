@@ -3,12 +3,34 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: Moloch
+    name: MolochSummoner
     network: mainnet
     source:
-      address: "0x519F9662798c2E07fbd5B30C1445602320C5cF5B"
+      address: "0x38064F40B20347d58b326E767791A6f79cdEddCe"
+      abi: MolochSummoner
+      startBlock: 11499151
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Register
+      abis:
+        - name: MolochSummoner
+          file: ./abis/molochsummoner.json              
+      eventHandlers:
+        - event: SummonComplete(indexed address,address[],address[],uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256[])
+          handler: handleSummonComplete
+        - event: Register(uint256,address,string,string,uint256)
+          handler: handleRegister
+      file: ./src/mappings.ts
+
+templates:
+  - name: MolochTemplate
+    kind: ethereum
+    network: mainnet
+    source:
       abi: Moloch
-      startBlock: 13090895
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -46,26 +68,4 @@ dataSources:
           handler: handleUpdateDelegateKey
         - event: Withdraw(indexed address,address,uint256)
           handler: handleWithdraw
-      file: ./src/mappings.ts
-  - kind: ethereum
-    name: MolochSummoner
-    network: mainnet
-    source:
-      address: "0x38064F40B20347d58b326E767791A6f79cdEddCe"
-      abi: MolochSummoner
-      startBlock: 11499151
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.6
-      language: wasm/assemblyscript
-      entities:
-        - Register
-      abis:
-        - name: MolochSummoner
-          file: ./abis/molochsummoner.json              
-      eventHandlers:
-        - event: SummonComplete(indexed address,address[],address[],uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256[])
-          handler: handleSummonComplete
-        - event: Register(uint256,address,string,string,uint256)
-          handler: handleRegister
-      file: ./src/mappings.ts
+      file: ./src/mappings.ts      

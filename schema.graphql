@@ -79,8 +79,6 @@ type Proposal @entity {
   proposalId: BigInt!
   "moloch dao scoped to this proposal"
   moloch: Moloch!
-  "contract address of the DAO related to this proposal"
-  molochAddress: Bytes!
   "member scoped to this proposal"
   member: Member!
   "address of associated member"

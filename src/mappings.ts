@@ -1,11 +1,10 @@
 import {  BigInt,  log,  Address,  Bytes,  ByteArray,} from "@graphprotocol/graph-ts";
 import {  SubmitProposal, SponsorProposal, SubmitVote, ProcessProposal, ProcessWhitelistProposal, ProcessGuildKickProposal, Ragequit, TokensCollected, CancelProposal, UpdateDelegateKey, Withdraw
-} from "../generated/Moloch/Moloch"
+} from "../generated/templates/MolochTemplate/Moloch"
 
-import {
-  //SummonComplete,
-  SummonComplete,
-} from "../generated/MolochSummoner/MolochSummoner"
+import { SummonComplete} from "../generated/MolochSummoner/MolochSummoner"
+
+import { MolochTemplate } from '../generated/templates'
 
 import {  Moloch,  Member,  Proposal,  Vote,  RageQuit,} from "../generated/schema";
 
@@ -15,9 +14,9 @@ import { createAndAddSummoner} from "./helper";
 
 // handler: handleSummonComplete
 export function handleSummonComplete(event: SummonComplete): void {
-  let molochId = event.params.moloch.toHex();
+  MolochTemplate.create(event.params.moloch);
+  let molochId = event.params.moloch.toHexString();
   let moloch = new Moloch(molochId);
-
 
   let eventSummoners: Address[] = event.params.summoner;
   let summoners: string[] = [];
@@ -42,9 +41,6 @@ export function handleSummonComplete(event: SummonComplete): void {
 }
 
 
-
-
-/*
 // SubmitProposal(address indexed applicant, uint256 sharesRequested, uint256 lootRequested, uint256 tributeOffered, address tributeToken, uint256 paymentRequested, address paymentToken, string details, bool[6] flags, uint256 proposalId, address indexed delegateKey, address indexed memberAddress);
 // handler: handleSubmitProposal
 export function handleSubmitProposal(event: SubmitProposal):void {
@@ -67,19 +63,15 @@ export function handleSubmitProposal(event: SubmitProposal):void {
   proposal.save();
 }
 
+
+
 // TODO - event SubmitVote(uint256 proposalId, uint256 indexed proposalIndex, address indexed delegateKey, address indexed memberAddress, uint8 uintVote);
 // handler: handleSubmitVote
 export function handleSubmitVote(event: SubmitVote): void {
   let molochId = event.address.toHexString();
-  let memberId = molochId
-    .concat("-member-")
-    .concat(event.params.memberAddress.toHex());
-  let proposalVotedId = molochId
-    .concat("-proposal-")
-    .concat(event.params.proposalId.toString());
-  let voteId = memberId
-    .concat("-vote-")
-    .concat(event.params.proposalId.toString());
+  let memberId = molochId.concat("-member-").concat(event.params.memberAddress.toHex());
+  let proposalVotedId = molochId.concat("-proposal-").concat(event.params.proposalId.toString());
+  let voteId = memberId.concat("-vote-").concat(event.params.proposalId.toString());
 
   let vote = new Vote(voteId);
   let member = Member.load(memberId);
@@ -87,6 +79,7 @@ export function handleSubmitVote(event: SubmitVote): void {
   if (member == null) {
     return;
   }
+
 
   //vote.createdAt = event.block.timestamp.toString();
   vote.proposal = proposalVotedId;
@@ -136,6 +129,7 @@ export function handleSubmitVote(event: SubmitVote): void {
 
 }
 
+  /*
 export function handleRagequit(event: Ragequit): void {
   let inputData = event.transaction.input.toHexString();
   let targetAddress = event.params.memberAddress.toHex();
@@ -203,11 +197,11 @@ export function handleRagequit(event: Ragequit): void {
 */
 export function handleProcessProposal(event: ProcessProposal): void {}
 
-export function handleSubmitProposal(event: SubmitProposal):void {}
+//export function handleSubmitProposal(event: SubmitProposal):void {}
 
 export function handleSponsorProposal(event: SponsorProposal):void {}
 
-export function handleSubmitVote(event: SubmitVote): void {}
+//export function handleSubmitVote(event: SubmitVote): void {}
 
 export function handleRagequit(event: Ragequit): void {}
 
