@@ -10,8 +10,8 @@ import {  Moloch,  Member,  Proposal,  Vote,  RageQuit,} from "../generated/sche
 
 import { createAndAddSummoner} from "./helper";
 
-// SummonComplete(address indexed summoner, address[] tokens, uint256 summoningTime, uint256 periodDuration, uint256 votingPeriodLength, uint256 gracePeriodLength, uint256 proposalDeposit, uint256 dilutionBound, uint256 processingReward);
 
+// SummonComplete(address indexed summoner, address[] tokens, uint256 summoningTime, uint256 periodDuration, uint256 votingPeriodLength, uint256 gracePeriodLength, uint256 proposalDeposit, uint256 dilutionBound, uint256 processingReward);
 // handler: handleSummonComplete
 export function handleSummonComplete(event: SummonComplete): void {
   MolochTemplate.create(event.params.moloch);
@@ -81,7 +81,6 @@ export function handleSubmitVote(event: SubmitVote): void {
   }
 
 
-  //vote.createdAt = event.block.timestamp.toString();
   vote.proposal = proposalVotedId;
   vote.member = memberId;
   vote.memberAddress = event.params.memberAddress;
@@ -129,21 +128,23 @@ export function handleSubmitVote(event: SubmitVote): void {
 
 }
 
-  /*
+// TODO -   event Ragequit(address indexed memberAddress, uint256 sharesToBurn, uint256 lootToBurn);
+// handler: handleRagequit
+
 export function handleRagequit(event: Ragequit): void {
   let inputData = event.transaction.input.toHexString();
   let targetAddress = event.params.memberAddress.toHex();
 
   // first part of the string will have '0xc0c1cf55' if coming from the executeAction on a minion
-  let signature = inputData.slice(0, 10);
+  //let signature = inputData.slice(0, 10);
 
-  if (inputData.length.toString() == "74" && signature != "0xc0c1cf55") {
-    log.info("$$$rage, input: {}, length: {}", [
-      inputData,
-      inputData.length.toString(),
-    ]);
-    targetAddress = "0x".concat(inputData.slice(34));
-  }
+ // if (inputData.length.toString() == "74" && signature != "0xc0c1cf55") {
+ //   log.info("$$$rage, input: {}, length: {}", [
+ //     inputData,
+ //     inputData.length.toString(),
+ //   ]);
+ //   targetAddress = "0x".concat(inputData.slice(34));
+ // }
 
   // log.info("***rage, targetAddress: {}", [targetAddress]);
 
@@ -151,19 +152,15 @@ export function handleRagequit(event: Ragequit): void {
   let moloch = Moloch.load(molochId);
 
   let memberId = molochId
-    .concat("-member-")
-    // .concat(event.params.memberAddress.toHex());
-    .concat(targetAddress);
+    .concat("-member-").concat(targetAddress);
   let member = Member.load(memberId);
 
   if (moloch == null || member == null) {
     return;
   }
 
-  let sharesAndLootToBurn = event.params.sharesToBurn.plus(
-    event.params.lootToBurn
-  );
-  let initialTotalSharesAndLoot = moloch.totalShares.plus(moloch.totalLoot);
+ // let sharesAndLootToBurn = event.params.sharesToBurn.plus( event.params.lootToBurn);
+ // let initialTotalSharesAndLoot = moloch.totalShares.plus(moloch.totalLoot);
 
   member.didRagequit = true;
   member.shares = member.shares.minus(event.params.sharesToBurn);
@@ -174,10 +171,7 @@ export function handleRagequit(event: Ragequit): void {
   member.save();
   moloch.save();
 
-  let rageQuitId = memberId
-    .concat("-")
-    .concat("rage-")
-    .concat(event.block.number.toString());
+  let rageQuitId = memberId.concat("-").concat("rage-").concat(event.block.number.toString());
   let rageQuit = new RageQuit(rageQuitId);
  // rageQuit.createdAt = event.block.timestamp.toString();
   rageQuit.moloch = molochId;
@@ -194,16 +188,10 @@ export function handleRagequit(event: Ragequit): void {
   rageQuit.save();
 
 }
-*/
+
 export function handleProcessProposal(event: ProcessProposal): void {}
 
-//export function handleSubmitProposal(event: SubmitProposal):void {}
-
 export function handleSponsorProposal(event: SponsorProposal):void {}
-
-//export function handleSubmitVote(event: SubmitVote): void {}
-
-export function handleRagequit(event: Ragequit): void {}
 
 export function handleProcessWhitelistProposal( event: ProcessWhitelistProposal): void {}
 
