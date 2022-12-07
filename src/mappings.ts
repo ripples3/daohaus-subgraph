@@ -21,7 +21,7 @@ export function handleSummonComplete(event: SummonComplete): void {
   let eventSummoners: Address[] = event.params.summoner;
   let summoners: string[] = [];
   let creator: Address = eventSummoners[0];
-  moloch.summoner = creator;
+      moloch.summoner = creator;
 
   let eventSummonerShares = event.params.summonerShares;
   moloch.totalShares = BigInt.fromI32(0);
@@ -33,10 +33,11 @@ export function handleSummonComplete(event: SummonComplete): void {
 
     summoners.push(createAndAddSummoner(molochId, summoner, shares, event));
 
-    moloch.totalLoot = BigInt.fromI32(0);
-    moloch.totalShares = mTotalShares;
-    moloch.save();
   }  
+   
+  moloch.totalLoot = BigInt.fromI32(0);
+  moloch.totalShares = mTotalShares;
+  moloch.save();
 
 }
 
