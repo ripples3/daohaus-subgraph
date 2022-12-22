@@ -133,21 +133,9 @@ export function handleSubmitVote(event: SubmitVote): void {
 // handler: handleRagequit
 
 export function handleRagequit(event: Ragequit): void {
-  let inputData = event.transaction.input.toHexString();
+ // let inputData = event.transaction.input.toHexString();
   let targetAddress = event.params.memberAddress.toHex();
 
-  // first part of the string will have '0xc0c1cf55' if coming from the executeAction on a minion
-  //let signature = inputData.slice(0, 10);
-
- // if (inputData.length.toString() == "74" && signature != "0xc0c1cf55") {
- //   log.info("$$$rage, input: {}, length: {}", [
- //     inputData,
- //     inputData.length.toString(),
- //   ]);
- //   targetAddress = "0x".concat(inputData.slice(34));
- // }
-
-  // log.info("***rage, targetAddress: {}", [targetAddress]);
 
   let molochId = event.address.toHexString();
   let moloch = Moloch.load(molochId);
